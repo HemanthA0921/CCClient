@@ -12,7 +12,7 @@ const App = () => {
   const fetchServerData = async (server) => {
     try {
       
-      const response = await axios.get(`http://localhost:3000/api/data`);
+      const response = await axios.get(`http://65.2.150.20/api/data`);
       console.log("response");
       switch (server) {
         case "server1":
