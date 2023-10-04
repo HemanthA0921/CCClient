@@ -11,19 +11,22 @@ const App = () => {
 
   const fetchServerData = async (server) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/${server}data`);
+      
+      const response = await axios.get(`http://localhost:3000/api/data`);
+      console.log("response");
       switch (server) {
         case "server1":
-          setDataServer1(response.data);
+          setDataServer1(response.data[0]);
           break;
         case "server2":
-          setDataServer2(response.data);
+          setDataServer2(response.data[1]);
           break;
         case "server3":
-          setDataServer3(response.data);
+          setDataServer3(response.data[2]);
           break;
         case "server4":
-          setDataPublic(response.data);
+          setDataPublic(response.data[3]);
+          break;
         default:
           break;
       }
@@ -47,7 +50,7 @@ const App = () => {
     e.preventDefault();
     const { name, RollNo, server } = formData;
     try {
-      await axios.post(`http://localhost:3000/api/${server}submit`, { name, RollNo });
+      await axios.post(`http://localhost:3000/api/submit`, { name, RollNo , server });
       setFormData({ name: "", RollNo: "", server: "server1" });
       fetchServerData(server);
     } catch (error) {
