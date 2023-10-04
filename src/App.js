@@ -50,7 +50,7 @@ const App = () => {
     e.preventDefault();
     const { name, RollNo, server } = formData;
     try {
-      await axios.post(`http://localhost:3000/api/submit`, { name, RollNo , server });
+      await axios.post(`http://65.2.150.20/submit`, { name, RollNo , server });
       setFormData({ name: "", RollNo: "", server: "server1" });
       fetchServerData(server);
     } catch (error) {
