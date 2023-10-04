@@ -11,35 +11,19 @@ const App = () => {
 
   const fetchServerData = async (server) => {
     try {
-      
       const response = await axios.get(`http://65.2.150.20/api/data`);
-      console.log("response");
-      switch (server) {
-        case "server1":
-          setDataServer1(response.data[0]);
-          break;
-        case "server2":
-          setDataServer2(response.data[1]);
-          break;
-        case "server3":
-          setDataServer3(response.data[2]);
-          break;
-        case "server4":
-          setDataPublic(response.data[3]);
-          break;
-        default:
-          break;
-      }
+      console.log(response.data);
+      setDataServer1(response.data[0]);
+      setDataServer2(response.data[1]);
+      setDataServer3(response.data[2]);
+      setDataPublic(response.data[3]);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    fetchServerData("server1");
-    fetchServerData("server2");
-    fetchServerData("server3");
-    fetchServerData("server4");
+    fetchServerData()
   }, []);
 
   const handleInputChange = (e) => {
