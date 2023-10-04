@@ -6,6 +6,7 @@ const App = () => {
   const [dataServer1, setDataServer1] = useState([]);
   const [dataServer2, setDataServer2] = useState([]);
   const [dataServer3, setDataServer3] = useState([]);
+  const [datapublic, setDataPublic] = useState([]);
   const [formData, setFormData] = useState({ name: "", RollNo: "", server: "server1" });
 
   const fetchServerData = async (server) => {
@@ -21,6 +22,8 @@ const App = () => {
         case "server3":
           setDataServer3(response.data);
           break;
+        case "server4":
+          setDataPublic(response.data);
         default:
           break;
       }
@@ -33,6 +36,7 @@ const App = () => {
     fetchServerData("server1");
     fetchServerData("server2");
     fetchServerData("server3");
+    fetchServerData("server4");
   }, []);
 
   const handleInputChange = (e) => {
@@ -56,7 +60,7 @@ const App = () => {
       <h1>Sample Data</h1>
 
       <div className="table-container">
-        <h2>Data from Server 1</h2>
+        <h2>Data from Server 1(AWS)</h2>
         <table>
           <thead>
             <tr>
@@ -76,7 +80,7 @@ const App = () => {
       </div>
 
       <div className="table-container">
-        <h2>Data from Server 2</h2>
+        <h2>Data from Server 2(Azure)</h2>
         <table>
           <thead>
             <tr>
@@ -96,7 +100,7 @@ const App = () => {
       </div>
 
       <div className="table-container">
-        <h2>Data from Server 3</h2>
+        <h2>Data from Server 3(Local)</h2>
         <table>
           <thead>
             <tr>
@@ -106,6 +110,26 @@ const App = () => {
           </thead>
           <tbody>
             {dataServer3.map((item) => (
+              <tr key={item._id}>
+                <td>{item.name}</td>
+                <td>{item.RollNo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="table-container">
+        <h2>Data from public shared server</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Roll No</th>
+            </tr>
+          </thead>
+          <tbody>
+            {datapublic.map((item) => (
               <tr key={item._id}>
                 <td>{item.name}</td>
                 <td>{item.RollNo}</td>
@@ -145,6 +169,7 @@ const App = () => {
             <option value="server1">Server 1</option>
             <option value="server2">Server 2</option>
             <option value="server3">Server 3</option>
+            <option value="server4">Shared Server</option>
           </select>
         </label>
         <button type="submit">Submit</button>
