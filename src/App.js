@@ -7,7 +7,8 @@ const App = () => {
   const [dataServer2, setDataServer2] = useState([]);
   const [dataServer3, setDataServer3] = useState([]);
   const [datapublic, setDataPublic] = useState([]);
-  const [formData, setFormData] = useState({ name: "", RollNo: "", server: "server1" });
+  const [state, setState] = useState(0)
+  const [formData, setFormData] = useState({ name: "", RollNo: "", server: ""});
 
   const fetchServerData = async (server) => {
     try {
@@ -27,16 +28,19 @@ const App = () => {
   }, []);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormData(prev => ({...prev, server: `Server 2`})) 
+    setState(prev => (prev+1)%3);
     const { name, RollNo, server } = formData;
     try {
-      await axios.post(`http://65.2.150.20/submit`, { name, RollNo , server });
+      const data = await axios.post(`http://65.2.150.20/api/submit`, { name, RollNo , server });
+      console.log(data.data)
       setFormData({ name: "", RollNo: "", server: "server1" });
-      fetchServerData(server);
+      fetchServerData();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -145,19 +149,6 @@ const App = () => {
             value={formData.RollNo}
             onChange={handleInputChange}
           />
-        </label>
-        <label>
-          Select Server:
-          <select
-            name="server"
-            onChange={handleInputChange}
-            value={formData.server}
-          >
-            <option value="server1">Server 1</option>
-            <option value="server2">Server 2</option>
-            <option value="server3">Server 3</option>
-            <option value="server4">Shared Server</option>
-          </select>
         </label>
         <button type="submit">Submit</button>
       </form>
