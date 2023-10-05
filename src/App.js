@@ -8,7 +8,7 @@ const App = () => {
   const [dataServer3, setDataServer3] = useState([]);
   const [datapublic, setDataPublic] = useState([]);
   const [state, setState] = useState(0)
-  const [formData, setFormData] = useState({ name: "", RollNo: "", server: ""});
+  const [formData, setFormData] = useState({ name: "", RollNo: "", server: "server3"});
 
   const fetchServerData = async (server) => {
     try {
@@ -33,8 +33,6 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormData(prev => ({...prev, server: `Server 2`})) 
-    setState(prev => (prev+1)%3);
     const { name, RollNo, server } = formData;
     try {
       const data = await axios.post(`http://65.2.150.20/api/submit`, { name, RollNo , server });
